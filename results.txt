@@ -1,0 +1,55 @@
+---------------------------- NUMBER OF CLASSES :  4  ---------------------------
+---------------------------- NUMBER OF ATTRIBUTES ------------------------------
+++++++ PUBLIC ATTRS ++++++
+learnjava.First : 1
+testjava.Fourth : 0
+testjava.Second : 0
+learnjava.Third : 2
+
+++++++ PRIVATE ATTRS ++++++
+learnjava.First : 0
+testjava.Fourth : 1
+testjava.Second : 1
+learnjava.Third : 1
+
+++++++ PROTECTED ATTRS ++++++
+learnjava.First : 0
+testjava.Fourth : 0
+testjava.Second : 1
+learnjava.Third : 1
+
+------------------------ NUMBER OF CLASSES ACCESSED BY EACH CLASS --------------------------
+learnjava.First accessed by  3  classes.
+testjava.Fourth accessed by  1  classes.
+testjava.Second accessed by  2  classes.
+learnjava.Third accessed by  1  classes.
+
+------------------------ NUMBER OF CLASSES EACH CLASS ACCESS --------------------------
+learnjava.First : 0
+testjava.Fourth : 3
+testjava.Second : 1
+learnjava.Third : 3
+
+------------------------ NUMBER OF METHODS ACCESSED BY EACH METHOD --------------------------
+learnjava.First.msg accessed by  2  methods.
+learnjava.First.say accessed by  3  methods.
+testjava.Fourth.main accessed by  0  methods.
+testjava.Fourth.m1 accessed by  0  methods.
+testjava.Fourth.m2 accessed by  1  methods.
+testjava.Second.main accessed by  0  methods.
+testjava.Second.callme accessed by  3  methods.
+testjava.Second.m1 accessed by  0  methods.
+learnjava.Third.m1 accessed by  0  methods.
+
+------------------------ NUMBER OF METHODS EACH METHOD ACCESS --------------------------
+learnjava.First.msg : 0
+learnjava.First.say : 0
+testjava.Fourth.main : 0
+testjava.Fourth.m1 : 1
+testjava.Fourth.m2 : 1
+testjava.Second.main : 1
+testjava.Second.callme : 2
+testjava.Second.m1 : 1
+learnjava.Third.m1 : 3
+
+Process finished with exit code 0

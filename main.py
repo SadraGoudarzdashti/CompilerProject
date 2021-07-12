@@ -68,6 +68,7 @@ class SecondListener(JavaParserLabeledListener):
     def enterMethodDeclaration(self, ctx:JavaParserLabeled.MethodDeclarationContext):
         self.method_name = ctx.IDENTIFIER().getText()
         package_class_method.append((self.package_name, self.class_name, self.method_name))
+        methods_access[(self.package_name, self.class_name, self.method_name)] = set()
 
     def exitLocalVariableDeclaration(self, ctx: JavaParserLabeled.LocalVariableDeclarationContext):
         try:
@@ -75,30 +76,36 @@ class SecondListener(JavaParserLabeledListener):
                 .variableInitializer().expression().creator() \
                 .createdName().getText()
             for source_class, source_package in class_package:
-                if ((self.package_name == source_package or source_package in self.imported) \
+                if ((self.package_name == source_package or source_package in self.imported or
+                     source_package + '.' + source_class in self.imported) \
                     and instance_class == source_class) or \
                         (instance_class == source_package + '.' + source_class):
 
                     classes_access[(self.package_name, self.class_name)].add((source_package, source_class))
                     instance_name = ctx.variableDeclarators().variableDeclarator(0).variableDeclaratorId().getText()
                     self.instances_in_method[instance_name] = (source_package, source_class)
-                    methods_access[(self.package_name, self.class_name, self.method_name)] = set()
+
         except:
             pass
 
     def enterMethodCall0(self, ctx:JavaParserLabeled.MethodCall0Context):
-        method_name = ctx.IDENTIFIER().getText()
-        obj_name = ctx.parentCtx.expression().getText()
-        if obj_name in self.instances_in_method:
-            methods_access[(self.package_name, self.class_name, self.method_name)].add(
-                (self.instances_in_method[obj_name][0], self.instances_in_method[obj_name][1], method_name))
+        try:
+            method_name = ctx.IDENTIFIER().getText()
+            obj_name = ctx.parentCtx.expression().getText()
+
+            if obj_name in self.instances_in_method:
+                methods_access[(self.package_name, self.class_name, self.method_name)].add(
+                    (self.instances_in_method[obj_name][0], self.instances_in_method[obj_name][1], method_name))
+        except:
+            pass
 
     def exitMethodDeclaration(self, ctx:JavaParserLabeled.MethodDeclarationContext):
         self.method_name = ''
         self.instances_in_method = {}
 
+
 def main():
-    for root, dirs, files in os.walk('java'):
+    for root, dirs, files in os.walk('test_project'):
         for file in files:
             if file.endswith('.java'):
                 stream = FileStream(os.path.join(root, file), encoding='utf8')
@@ -110,7 +117,7 @@ def main():
                 walker = ParseTreeWalker()
                 walker.walk(t=tree, listener=listener)
 
-    for root, dirs, files in os.walk('java'):
+    for root, dirs, files in os.walk('test_project'):
         for file in files:
             if file.endswith('.java'):
                 stream = FileStream(os.path.join(root, file), encoding='utf8')
