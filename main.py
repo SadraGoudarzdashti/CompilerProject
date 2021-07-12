@@ -77,7 +77,7 @@ class SecondListener(JavaParserLabeledListener):
 
 
 def main():
-    for root, dirs, files in os.walk('C:\\Users\\novin\\Desktop\\java'):
+    for root, dirs, files in os.walk('java'):
         for file in files:
             if file.endswith('.java'):
                 stream = FileStream(os.path.join(root, file), encoding='utf8')
@@ -89,7 +89,7 @@ def main():
                 walker = ParseTreeWalker()
                 walker.walk(t=tree, listener=listener)
 
-    for root, dirs, files in os.walk('C:\\Users\\novin\\Desktop\\java'):
+    for root, dirs, files in os.walk('java'):
         for file in files:
             if file.endswith('.java'):
                 stream = FileStream(os.path.join(root, file), encoding='utf8')
@@ -125,15 +125,14 @@ def main():
     print("\n------------------------ NUMBER OF CLASSES ACCESSED BY EACH CLASS --------------------------")
     for class_name, package_name in class_package.items():
         i = 0
-        for _, cp in classes_access.items():
-            if (package_name, class_name) in cp:
+        for _, pc in classes_access.items():
+            if (package_name, class_name) in pc:
                 i += 1
-        print(class_name + '.' + package_name, 'accessed by ', i, ' classes.')
+        print(package_name + '.' + class_name, 'accessed by ', i, ' classes.')
 
     print("\n------------------------ NUMBER OF CLASSES EACH CLASS ACCESS --------------------------")
     for class_and_package_name, accessed in classes_access.items():
         print(class_and_package_name[0] + '.' + class_and_package_name[1], ':', len(accessed))
-
 
 
 
